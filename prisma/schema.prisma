@@ -19,6 +19,7 @@ model User {
   hashedRt  String?
   firstName String?
   lastName  String?
+  role      String     @default("USER") // USER, ADMIN
   bookmarks Bookmark[]
 
   @@map("users")
