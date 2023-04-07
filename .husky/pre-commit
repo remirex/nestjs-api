@@ -3,4 +3,4 @@
 
 npx lint-staged
 
-npx check-branch-name
+yarn check-branch-name

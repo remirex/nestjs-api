@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 local_branch_name="$(git rev-parse --abbrev-ref HEAD)"
 
 valid_branch_regex='^(master|main|develop){1}$|^((feature|fix|hotfix|bug)\/[a-zA-Z0-9\-]+)$'

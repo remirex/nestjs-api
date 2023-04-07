@@ -23,6 +23,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
+    "check-branch-name": "chmod 755 ./hooks/check_branch_naming.sh && ./hooks/check_branch_naming.sh",
     "prepare": "husky install"
   },
   "lint-staged": {
@@ -30,7 +31,6 @@
       "prettier --ignore-path ./.prettierignore --write \"src/**/*.ts\" \"test/**/*.ts\""
     ]
   },
-  "check-branch-name": "chmod 755 ./hooks/check_branch_naming.sh && sh ./hooks/check_branch_naming.sh",
   "dependencies": {
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.3.1",
