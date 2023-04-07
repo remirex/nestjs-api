@@ -30,6 +30,7 @@
       "prettier --ignore-path ./.prettierignore --write \"src/**/*.ts\" \"test/**/*.ts\""
     ]
   },
+  "check-branch-name": "chmod 755 ./hooks/check_branch_naming.sh && sh ./hooks/check_branch_naming.sh",
   "dependencies": {
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.3.1",
