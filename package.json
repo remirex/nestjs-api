@@ -27,10 +27,7 @@
   },
   "lint-staged": {
     "**/*.ts": [
-      "prettier --ignore-path ./.prettierignore --write"
-    ],
-    "packages/**/*.json": [
-      "prettier --ignore-path ./.prettierignore --write"
+      "prettier --ignore-path ./.prettierignore --write \"src/**/*.ts\" \"test/**/*.ts\""
     ]
   },
   "dependencies": {

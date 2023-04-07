@@ -14,6 +14,6 @@ export class AccessTokenStrategy extends PassportStrategy(Strategy, 'jwt') {
   }
 
   validate(payload: JwtPayload) {
-    return payload; // test pre-commit lint-staged
+    return payload;
   }
 }
