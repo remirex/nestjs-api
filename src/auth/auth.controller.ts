@@ -10,10 +10,12 @@ import {
   GetCurrentUser,
   GetCurrentUserId,
   Public,
+  Roles,
 } from 'src/common/decorators';
-import { RefreshTokenGuard } from 'src/common/guards';
+import { RefreshTokenGuard, RolesGuard } from 'src/common/guards';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto';
+import { Role } from './enums';
 import { Tokens } from './types';
 
 @Controller('auth')
@@ -44,7 +46,8 @@ export class AuthController {
   }
 
   @Public()
-  @UseGuards(RefreshTokenGuard)
+  @Roles(Role.USER)
+  @UseGuards(RefreshTokenGuard, RolesGuard)
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
   refreshTokens(

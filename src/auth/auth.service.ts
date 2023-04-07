@@ -49,6 +49,10 @@ export class AuthService {
     const user = await this.prisma.user.findUnique({
       where: { email: dto.email },
     });
+    console.log(
+      '🚀 ~ file: auth.service.ts:52 ~ AuthService ~ signin ~ user:',
+      user,
+    );
     // if user does not exist throw exception
     if (!user) {
       throw new ForbiddenException('Credentials incorrect');
@@ -60,7 +64,7 @@ export class AuthService {
       throw new ForbiddenException('Credentials incorrect');
     }
     // return access & refrsh tokens
-    const tokens = await this.getTokens(user.id, user.email);
+    const tokens = await this.getTokens(user.id, user.email, user.role);
     await this.updateRefreshTokenHash(user.id, tokens.refresh_token);
 
     return tokens;
@@ -98,7 +102,7 @@ export class AuthService {
 
     if (!refreshTokenMatches) throw new ForbiddenException('Access Denied');
 
-    const tokens = await this.getTokens(user.id, user.email);
+    const tokens = await this.getTokens(user.id, user.email, user.role);
 
     await this.updateRefreshTokenHash(user.id, tokens.refresh_token);
 
@@ -128,12 +132,13 @@ export class AuthService {
     return argon.verify(hash, data);
   }
 
-  async getTokens(userId: number, email: string) {
+  async getTokens(userId: number, email: string, role: string) {
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(
         {
           sub: userId,
           email,
+          roles: [role],
         },
         {
           secret: this.config.get<string>('jwtConstants.accessTokenSecret'),
@@ -144,6 +149,7 @@ export class AuthService {
         {
           sub: userId,
           email,
+          roles: [role],
         },
         {
           secret: this.config.get<string>('jwtConstants.refreshTokenSecret'),
