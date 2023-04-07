@@ -28,7 +28,7 @@ lerna-debug.log*
 *.sublime-workspace
 
 # IDE - VSCode
-/.vscode/*
+.vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
@@ -40,4 +40,4 @@ lerna-debug.log*
 # Built Visual Studio Code Extensions
 *.vsix
 
-.env
+.env*
