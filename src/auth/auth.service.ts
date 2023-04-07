@@ -9,7 +9,11 @@ import { Tokens } from './types';
 
 @Injectable({})
 export class AuthService {
-  constructor(private prisma: PrismaService, private jwtService: JwtService, private config: ConfigService) {}
+  constructor(
+    private prisma: PrismaService,
+    private jwtService: JwtService,
+    private config: ConfigService,
+  ) {}
 
   async signup(dto: AuthDto) {
     // generate the password hash
@@ -87,7 +91,10 @@ export class AuthService {
 
     if (!user || !user.hashedRt) throw new ForbiddenException('Access Denied');
 
-    const refreshTokenMatches = await this.compareData(user.hashedRt, refreshToken);
+    const refreshTokenMatches = await this.compareData(
+      user.hashedRt,
+      refreshToken,
+    );
 
     if (!refreshTokenMatches) throw new ForbiddenException('Access Denied');
 
@@ -98,7 +105,10 @@ export class AuthService {
     return tokens;
   }
 
-  async updateRefreshTokenHash(userId: number, refreshToken: string): Promise<void> {
+  async updateRefreshTokenHash(
+    userId: number,
+    refreshToken: string,
+  ): Promise<void> {
     const hash = await this.hashData(refreshToken);
     await this.prisma.user.update({
       where: {
