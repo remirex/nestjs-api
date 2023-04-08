@@ -49,10 +49,7 @@ export class AuthService {
     const user = await this.prisma.user.findUnique({
       where: { email: dto.email },
     });
-    console.log(
-      '🚀 ~ file: auth.service.ts:52 ~ AuthService ~ signin ~ user:',
-      user,
-    );
+
     // if user does not exist throw exception
     if (!user) {
       throw new ForbiddenException('Credentials incorrect');
