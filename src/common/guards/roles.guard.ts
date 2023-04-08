@@ -12,23 +12,11 @@ export class RolesGuard implements CanActivate {
       ctx.getHandler(),
       ctx.getClass(),
     ]);
-    console.log(
-      '🚀 ~ file: roles.guard.ts:18 ~ RolesGuard ~ canActivate ~ requiredRoles:',
-      requiredRoles,
-    );
 
     if (!requiredRoles || requiredRoles.length === 0) return true;
 
     const request = ctx.switchToHttp().getRequest();
-    console.log(
-      '🚀 ~ file: roles.guard.ts:26 ~ RolesGuard ~ canActivate ~ request:',
-      request.user,
-    );
     const user = request.user as JwtPayload;
-    console.log(
-      '🚀 ~ file: roles.guard.ts:19 ~ RolesGuard ~ canActivate ~ user:',
-      user,
-    );
 
     return requiredRoles.some((role) => user.roles.includes(role));
   }

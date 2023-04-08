@@ -1,8 +1,10 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
+import { AccessControlModule } from 'nest-access-control';
 import { AuthModule } from './auth/auth.module';
 import jwtConfig from './auth/constants';
+import { RBAC_POLICY } from './auth/policy/rbac';
 import { BookmarkModule } from './bookmark/bookmark.module';
 import { AccessTokenGuard } from './common/guards';
 import databseConfig from './prisma/constants';
@@ -16,6 +18,7 @@ import { LoggerMiddleware } from './utils/logger.middleware';
       isGlobal: true,
       load: [jwtConfig, databseConfig],
     }),
+    AccessControlModule.forRoles(RBAC_POLICY),
     AuthModule,
     UserModule,
     BookmarkModule,
