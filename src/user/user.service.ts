@@ -1,5 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { toUserDto, toUsersDto } from 'src/common/dto';
+import {
+  PageDto,
+  PageMetaDto,
+  PageOptionsDto,
+  toUserDto,
+  toUsersDto,
+} from 'src/common/dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UserDto } from './dto';
 
@@ -21,5 +27,22 @@ export class UserService {
     const users = await this.prisma.user.findMany();
 
     return toUsersDto(users);
+  }
+
+  async getUsersWithPagination(
+    pageOptionsDto: PageOptionsDto,
+  ): Promise<PageDto<UserDto>> {
+    const results = await this.prisma.user.findMany({
+      skip: pageOptionsDto.skip,
+      take: pageOptionsDto.take,
+      orderBy: {
+        id: pageOptionsDto.order,
+      },
+    });
+    const transforedUsers = toUsersDto(results);
+    const itemCount = await this.prisma.user.count();
+    const pageMetaDto = new PageMetaDto({ pageOptionsDto, itemCount });
+
+    return new PageDto(transforedUsers, pageMetaDto);
   }
 }
