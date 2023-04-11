@@ -7,6 +7,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import {
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiForbiddenResponse,
   ApiOperation,
@@ -72,6 +73,7 @@ export class AuthController {
 
   @Post('logout')
   @HttpCode(HttpStatus.OK)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Logout user' })
   @ApiUnauthorizedResponse({
     description: 'Unauthorized',
@@ -90,6 +92,7 @@ export class AuthController {
   })
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Refresh token' })
   @ApiUnauthorizedResponse({
     description: 'Unauthorized',
